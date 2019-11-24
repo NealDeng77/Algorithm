@@ -1,4 +1,3 @@
-import java.util.*;
 public class QuickFindUF {
     private int[] id;    // id[i] = component identifier of i
     private int count;   // number of components
