@@ -1,3 +1,6 @@
+/*
+ * Weighted quick union without path compression
+ */
 
 public class WeightedQuickUnionUF {
 	private int[] parent;  //parent[i] = parent of i
