@@ -1,4 +1,4 @@
-//generic 
+//linked-list implementation of generic static 
 public class Stack<Item> {
 	private Node head = null;
 	private class Node {

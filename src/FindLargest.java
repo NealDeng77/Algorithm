@@ -26,7 +26,7 @@ public class FindLargest {
 	private int[] id;
 	private int count;        //count set
 	private int[] sz;
-	private int[] max;        //root largest
+	private int[] max;        //store the largest at each subtree root
 	public FindLargest(int n) {
 		count = n;
 		id = new int[n];
@@ -62,7 +62,7 @@ public class FindLargest {
 	}
 	
 	// find the root first, then return the max
-	private int find(int i) {
+	private int getMaxfind(int i) {
 		validate(i);
 		int rootP = root(i);
 		return max[rootP];

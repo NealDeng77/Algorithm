@@ -1,0 +1,11 @@
+/*
+ * Successor with delete. Given a set of n integers S = {0, 1, 2...N-1}
+ * and a sequence of requests of the following form:
+ * 1.Remove x from S
+ * 2.Find the successor of x: the smallest y in S such that y>=x.
+ * design a data type so that all operations (except construction) 
+ * take logarithmic time or better in the worst case.
+ */
+public class DeleteSuccessor {
+	
+}

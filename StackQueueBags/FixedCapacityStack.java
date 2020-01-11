@@ -1,7 +1,7 @@
 
 public class FixedCapacityStack<Item> {
 	private Item[] s;
-	private int N;
+	private int N = 0;
 	
 	public FixedCapacityStack(int capacity) {
 		//s = new Item[capacity];       //java doesn't allow generic array creation
