@@ -1,4 +1,4 @@
-//linked-list implementation of generic static
+//linked-list implementation of generic stack
 //implement iterator
 import java.util.Iterator;
 public class Stack<Item> implements Iterable<Item>{
