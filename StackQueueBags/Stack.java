@@ -1,5 +1,7 @@
-//linked-list implementation of generic static 
-public class Stack<Item> {
+//linked-list implementation of generic static
+//implement iterator
+import java.util.Iterator;
+public class Stack<Item> implements Iterable<Item>{
 	private Node head = null;
 	private class Node {
 		Item str;
@@ -21,5 +23,26 @@ public class Stack<Item> {
 		Item popString = head.str;
 		head = head.next;
 		return popString;
+	}
+	
+	public Iterator<Item> iterator(){
+		return new ListIterator();
+	}
+	
+	private class ListIterator implements Iterator<Item>{
+		private Node current = head;
+		public boolean hasNext() {
+			return current != null;
+		}
+		
+		public void remove() {
+			//Not supported
+		}
+		
+		public Item next() {
+			Item item = current.str;
+			current = current.next;
+			return item;
+		}
 	}
 }
