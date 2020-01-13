@@ -3,6 +3,7 @@
 import java.util.Iterator;
 public class Stack<Item> implements Iterable<Item>{
 	private Node head = null;
+	private int n = 0;
 	private class Node {
 		Item str;
 		Node next;
@@ -17,12 +18,18 @@ public class Stack<Item> implements Iterable<Item>{
 		head = new Node();
 		head.str = strtemp;
 		head.next = oldNode;
+		n++;
 	}
 	
 	public Item pop() {
 		Item popString = head.str;
 		head = head.next;
+		n--;
 		return popString;
+	}
+	
+	public int size() {
+		return n;
 	}
 	
 	public Iterator<Item> iterator(){
