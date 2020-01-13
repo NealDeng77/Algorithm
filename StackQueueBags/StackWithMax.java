@@ -15,11 +15,17 @@
  *    of trackStack again into it.
  * 4. If we pop an element from the main stack, then pop an element from the trackStack as well.
  * 5. Now to compute the maximum of the main stack at any point, we can simply print the top element of Track stack.
+ * 
+ * Performance: 1. use extra stack   2.push, pop, getMax O(1)
+ *
  */
 public class StackWithMax {
 	private Stack<Double> stack = new Stack<Double>();
 	private Stack<Double> maxstack = new Stack<Double>();
 	
+	/*
+	 * push item to the stack
+	 */
 	public void push(double item) {
 		
 		stack.push(item);
@@ -38,10 +44,16 @@ public class StackWithMax {
 		}
 	}
 	
+	/*
+	 * return the max element of the stack
+	 */
 	public double getMax() {
 		return maxstack.peek();
 	}
 	
+	/*
+	 * pop from the stack
+	 */
 	public double pop() {
 		maxstack.pop();
 		return stack.pop();
