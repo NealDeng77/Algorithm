@@ -5,6 +5,11 @@ import java.util.EmptyStackException;
  * Interview Question
  * Queue with two stacks. Implement a queue with two stacks so that 
  * each queue operations takes a constant amortized number of stack operations.
+ * Performance: O(n) for enqueue and dequeue in the worst case
+ * O(1) when sequential enqueue and dequeue 
+ * Reference: https://www.careercup.com/question?id=4399683
+ * https://www.glassdoor.com/Interview/How-to-implement-a-queue-simply-using-two-stacks-and-how-to-implement-a-highly-efficient-queue-using-two-stacks-QTN_41158.htm
+ * https://coderbyte.com/algorithm/implement-queue-using-two-stacks
  */
 public class QueueWithTwoStacks<Item> {
 	private Stack<Item> a = new Stack<Item>();
@@ -25,7 +30,9 @@ public class QueueWithTwoStacks<Item> {
 	}
 	
 	
-	
+	/*
+	 * dequeue
+	 */
 	public Item dequeue(){
 		// if dequeue is called consecutively
 		if(!b.isEmpty()) {
