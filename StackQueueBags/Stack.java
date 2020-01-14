@@ -1,5 +1,6 @@
 //linked-list implementation of generic stack
 //implement iterator
+import java.util.EmptyStackException;
 import java.util.Iterator;
 public class Stack<Item> implements Iterable<Item>{
 	private Node head = null;
@@ -22,6 +23,9 @@ public class Stack<Item> implements Iterable<Item>{
 	}
 	
 	public Item pop() {
+		if(head == null) {
+			throw new EmptyStackException();
+		}
 		Item popString = head.str;
 		head = head.next;
 		n--;
@@ -33,6 +37,9 @@ public class Stack<Item> implements Iterable<Item>{
 	}
 	
 	public Item peek() {
+		if(head == null) {
+			throw new EmptyStackException();
+		}
 		return head.str;
 	}
 	
