@@ -4,7 +4,7 @@ import java.util.EmptyStackException;
  * Interview Question in Cracking the Coding Interview
  * Describe how you could use a single array to implement three stacks
  * Idea: Fixed array, 1st stack: arr[0, 1/3n), 2nd stack:[1/3n, 2/3n), 3rd stack[2/3n, n)
- * 
+ * Author: Qiaofang Deng
  */
 public class ThreeInOne<Item> {
 	private Item[] arr;       //array to store elements
