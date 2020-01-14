@@ -1,7 +1,9 @@
-public class LinkedQueueOfStrings {
+import java.util.NoSuchElementException;
+
+public class LinkedQueueOfItems<Item> {
 	private Node head, tail;
 	private class Node {
-		String str;
+		Item str;
 		Node next;
 	}
 	
@@ -9,7 +11,7 @@ public class LinkedQueueOfStrings {
 		return head == null;
 	}
 	
-	public void enqueue(String item) {
+	public void enqueue(Item item) {
 		Node oldLast = tail;
 		tail = new Node();
 		tail.str = item;
@@ -22,12 +24,22 @@ public class LinkedQueueOfStrings {
 		}
 	}
 	
-	public String dequeue() {
-		String item = head.str;
+	public Item dequeue() {
+		if(head == null) {
+			throw new NoSuchElementException();
+		}
+		Item item = head.str;
 		head = head.next;
 		if(isEmpty()) {
 			tail = null;
 		}
 		return item;
+	}
+	
+	public Item peek() {
+		if(head == null) {
+			throw new NoSuchElementException();
+		}
+		return head.str;
 	}
 }
