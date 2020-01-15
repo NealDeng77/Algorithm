@@ -5,141 +5,111 @@ import java.util.EmptyStackException;
  * Describe how you could use a single array to implement three stacks
  * Idea: Fixed array, 1st stack: arr[0, 1/3n), 2nd stack:[1/3n, 2/3n), 3rd stack[2/3n, n)
  * Author: Qiaofang Deng
+ * StackNum: 0, 1, 2
  */
 public class ThreeInOne<Item> {
+	private static final int NUMOFSTACK = 3;
+	private int numOfStack;   //number of stack
 	private Item[] arr;       //array to store elements
-	private int capacity;     //array capacity 
-	private int numOfElement1;  //number of elements in stack one
-	private int numOfElement2;  //number of elements in stack two
-	private int numOfElement3;  //number of elements in stack three
+	private int capacity;     //stack capacity 
+	private int[] size; //to store the number of elements of each stack
 	
 	/*
 	 * Constructor
 	 */
-	public ThreeInOne(int n) {
-		capacity = n;
-		arr = (Item[])new Object[n];
-		numOfElement1 = 0;
-		numOfElement2 = 0;
-		numOfElement3 = 0;
+	public ThreeInOne(int stackSize) {
+		numOfStack = NUMOFSTACK;
+		capacity = stackSize;
+		arr = (Item[])new Object[stackSize * numOfStack];
+		size = new int[numOfStack];
 	}
 	
 	/*
 	 * Add item to a specific stack
 	 * @param item item to add
 	 * @param stackNum add item to which stack
+	 * @throws IllegalArgumentException if stackNum < 0 || > 2
+	 * @throws Exception if the stack is full
 	 */
 	public void push(Item item, int stackNum) throws Exception {
+		validation(stackNum);
 		if(isFull(stackNum)) {
 			throw new Exception("Stack " + stackNum + " is full" );
 		}
-		if(stackNum == 1) {
-			arr[numOfElement1++] = item;
-		}
-		else if(stackNum == 2) {
-			arr[capacity/3 + numOfElement2] = item;
-			numOfElement2++;
-		}
-		else if(stackNum == 3) {
-			arr[2*capacity/3 + numOfElement3] = item;
-			numOfElement3++;
-		}
+		//push item
+		arr[indexOfTop(stackNum)] = item;
+		//increment stack size accordingly
+		size[stackNum]++;
 		
 	}
 	
 	/*
 	 * Pop from the stack
 	 * @param stackNum which stack to pop
+	 * @throws IllegalArgumentException if stackNum < 0 || > 2
+	 * @throws Exception if the stack is empty
 	 */
 	public Item pop(int stackNum) throws Exception {
-		if(stackNum < 1 || stackNum > 3) {
-			throw new Exception("No such stack");
-		}
+		validation(stackNum);
 		if(isEmpty(stackNum)) {
 			throw new EmptyStackException();
 		}
 		Item temp;
-		if(stackNum == 1) {
-			temp = arr[--numOfElement1];
-			arr[numOfElement1] = null;
-			return temp;
-		}
-		else if(stackNum == 2) {
-			temp = arr[capacity/3 + numOfElement2 - 1];
-			arr[capacity/3 + numOfElement2 - 1] = null;
-			numOfElement2--;
-			return temp;
-		}
-		else{
-			temp = arr[2* capacity/3 + numOfElement3 - 1];
-			arr[2* capacity/3 + numOfElement3 - 1] = null;
-			numOfElement3--;
-			return temp;
-		}
+		temp = arr[indexOfTop(stackNum)];
+		//avoid loitering
+		arr[indexOfTop(stackNum)] = null;
+		size[stackNum]--;
+		return temp;
 	}
 	
 	/*
 	 * Peek the top of the stack
 	 * @param stackNum which stack to peek
+	 * @throws IllegalArgumentException if stackNum < 0 || > 2
+	 * @throws Exception if the stack is empty
 	 */
 	public Item peek(int stackNum) throws Exception {
-		if(stackNum < 1 || stackNum > 3) {
-			throw new Exception("No such stack");
-		}
+		validation(stackNum);
 		if(isEmpty(stackNum)) {
 			throw new EmptyStackException();
 		}
-		Item temp;
-		if(stackNum == 1) {
-			temp = arr[numOfElement1 - 1];
-			return temp;
-		}
-		else if(stackNum == 2) {
-			temp = arr[capacity/3 + numOfElement2 - 1];
-			return temp;
-		}
-		else{
-			temp = arr[2* capacity/3 + numOfElement3 - 1];
-			return temp;
-		}
+		return arr[indexOfTop(stackNum) - 1];
 	}
 	
 	/*
 	 * Check if the stack is empty
+	 * @param stackNum which stack
 	 */
-	private boolean isEmpty(int stackNum) throws Exception {
-		if(stackNum < 1 || stackNum > 3) {
-			throw new Exception("No such stack");
-		}
-		if(stackNum == 1 && numOfElement1 == 0) {
-			return true;
-		}
-		else if(stackNum == 2 && numOfElement1 == 0) {
-			return true;
-		}
-		else if(stackNum == 3 && numOfElement1 == 0) {
-			return true;
-		}
-		return false;
+	private boolean isEmpty(int stackNum){
+		return size[stackNum] == 0;
 	}
 	
 	
 	/*
 	 * Check if the stack is full
+	 * @param stackNum which stack
 	 */
-	private boolean isFull(int stackNum) throws Exception {
-		if(stackNum < 1 || stackNum > 3) {
-			throw new Exception("No such stack");
+	private boolean isFull(int stackNum) {
+		return size[stackNum] == capacity;
+	}
+	
+	/*
+	 * return the index of the top of the stack
+	 * @param stackNum which stack
+	 */
+	private int indexOfTop(int stackNum) {
+		int offset = stackNum * capacity;
+		return offset + size[stackNum] - 1;
+	}
+	
+	/*
+	 * validate argument
+	 * @param stackNum which stack
+	 * @throws IllegalArgumentException if stackNum < 0 || > 2
+	 */
+	private void validation(int stackNum) {
+		if(stackNum < 0 || stackNum > 2) {
+			throw new IllegalArgumentException();
 		}
-		if(stackNum == 1 && numOfElement1 == capacity/3) {
-			return true;
-		}
-		else if(stackNum == 2 && numOfElement1 == capacity/3) {
-			return true;
-		}
-		else if(stackNum == 3 && numOfElement1 == capacity/3) {
-			return true;
-		}
-		return false;
 	}
 }
