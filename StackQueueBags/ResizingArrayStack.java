@@ -1,7 +1,7 @@
 //resizing array implementation of generic stack
 //implement iterator
 import java.util.Iterator;
-public class ResizeItemOfStack<Item> implements Iterable<Item>{
+public class ResizingArrayStack<Item> implements Iterable<Item>{
 	private Item[] s;
 	private int N;
 	
@@ -25,7 +25,7 @@ public class ResizeItemOfStack<Item> implements Iterable<Item>{
 		}
 	}
 	
-	public ResizeItemOfStack() {
+	public ResizingArrayStack() {
 		s = (Item[])new Object[1];
 	}
 	
