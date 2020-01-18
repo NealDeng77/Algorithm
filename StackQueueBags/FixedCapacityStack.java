@@ -23,9 +23,11 @@ public class FixedCapacityStack<Item> {
 		N--;
 		return str;
 		
-		
-		
 		//return s[--N]; //this is loitering. because the garbage collection won't clean the memory
 		//even when it's empty in the array elements
+	}
+	
+	public boolean isFull() {
+		return N == s.length;
 	}
 }

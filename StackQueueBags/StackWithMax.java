@@ -1,3 +1,5 @@
+import java.util.EmptyStackException;
+
 /*
  * Algorithm 1, Princeton
  * Interview Question
@@ -5,18 +7,22 @@
  * operations (push and pop) and also a return-the-maximum operation. Assume 
  * the elements are real numbers so that you can compare them.
  * Reference: https://www.geeksforgeeks.org/tracking-current-maximum-element-in-a-stack/
+ * Cracking the coding interview
+ * Minstack has the same idea.
  * 
  * Idea:
  * 1. Use another stack to check the max.
  * 2. push the item to the stack
  * 3. Now from the second element, push the element to the main stack. 
- *    Compare the element with the top element of the track stack, if the current element is greater
- *    than top of trackStack then push the current element to trackStack otherwise push the top element
- *    of trackStack again into it.
- * 4. If we pop an element from the main stack, then pop an element from the trackStack as well.
+ *    Compare the element with the top element of the track stack, if the current element is greater or 
+ *    equal to the top of trackStack then push the current element to trackStack.
+ * 4. If we pop an element from the main stack, then compare it to the top of the maxstack
+ * if it's the same, pop from the maxstack as well
  * 5. Now to compute the maximum of the main stack at any point, we can simply print the top element of Track stack.
  * 
- * Performance: 1. use extra stack   2.push, pop, getMax O(1)
+ * Performance: 1. use extra stack, but not much space because only when a larger element is pushed to the
+ * mainstack we push that to the maxstack as well   
+ * 2.push, pop, getMax O(1)
  *
  */
 public class StackWithMax {
@@ -31,10 +37,7 @@ public class StackWithMax {
 		stack.push(item);
 		if(!maxstack.isEmpty()) {
 			//if the top of the maxstack is larger, push that element again
-			if(item <= maxstack.peek()) {
-				maxstack.push(maxstack.peek());
-			}else {
-				//if the item is the max, push to the top of the stack
+			if(item >= maxstack.peek()) {
 				maxstack.push(item);
 			}
 		}
@@ -48,6 +51,9 @@ public class StackWithMax {
 	 * return the max element of the stack
 	 */
 	public double getMax() {
+		if(maxstack.isEmpty()) {
+			throw new EmptyStackException();
+		}
 		return maxstack.peek();
 	}
 	
@@ -55,7 +61,11 @@ public class StackWithMax {
 	 * pop from the stack
 	 */
 	public double pop() {
-		maxstack.pop();
-		return stack.pop();
+		if(stack.isEmpty()) {
+			throw new EmptyStackException();
+		}
+		double item = stack.pop(); 
+		if(maxstack.peek() == item) maxstack.pop();
+		return item;
 	}
 }
