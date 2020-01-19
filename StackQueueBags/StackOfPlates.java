@@ -59,31 +59,23 @@ public class StackOfPlates {
 		return tempItem;
 	}
 	
-//	/*
-//	 * Pop from a specific sub-stack
-//	 * We assume some stacks can be not at full capacity. In this situation, the popAt() operation
-//   * has less time complexity
-//	 */
-//	public int popAt(int index) {
-//		FixedCapacityStack<Integer> stack = (FixedCapacityStack<Integer>)stacks.get(index - 1);
-//		if(stack.isEmpty() || stack == null) {
-//			throw new EmptyStackException();
-//		}
-//		int tempItem = stack.pop();
-//		//if the stack is empty, remove that stack
-//		if(stack.isEmpty()) {
-//			stacks.remove(index - 1);
-//		}
-//		return tempItem;
-//	}
-	
 	/*
 	 * Pop from a specific sub-stack
-	 * It's like a "rollover" system. If we pop an element from stack 1, we need to remove
-	 * the bottom of stack 2 and push it onto stack 1. We then need to rollover from stack
-	 * 3 to stack 2, stack 4 to stack 3, etc.
+	 * We assume some stacks can be not at full capacity. In this situation, the popAt() operation
+	 * has less time complexity
 	 */
 	public int popAt(int index) {
-		
+		FixedCapacityStack<Integer> stack = (FixedCapacityStack<Integer>)stacks.get(index - 1);
+		if(stack.isEmpty() || stack == null) {
+			throw new EmptyStackException();
+		}
+		int tempItem = stack.pop();
+		//if the stack is empty, remove that stack
+		if(stack.isEmpty()) {
+			stacks.remove(index - 1);
+		}
+		return tempItem;
 	}
+	
+
 }
