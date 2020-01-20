@@ -7,7 +7,7 @@ public class LinkedQueueOfItems<Item> {
 		Node next;
 	}
 	
-	private boolean isEmpty() {
+	public boolean isEmpty() {
 		return head == null;
 	}
 	
