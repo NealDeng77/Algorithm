@@ -19,7 +19,7 @@ public class DoubleLinkedList {
 	 * Insert at the front of the list
 	 * @param data data of the new Node
 	 */
-	public void insertFront(int data) {
+	public void push(int data) {
 		if(head != null) {
 			Node oldHead = head;
 			Node head = new Node(data);
@@ -54,7 +54,7 @@ public class DoubleLinkedList {
 	 * Insert at the end of the list
 	 * @param data data of the new Node
 	 */
-	public void insertEnd(int data) {
+	public void append(int data) {
 		if(head == null) {
 			head = new Node(data);
 		}else {
@@ -108,5 +108,38 @@ public class DoubleLinkedList {
 			x = x.next;
 		}
 		return head;
+	}
+	
+	/*
+	 * Print list
+	 */
+	public void printList(Node node) {
+		Node last = null;
+		System.out.println("Traversal in forward Direction");
+		while(node != null) {
+			System.out.print(node.value + " ");
+			last = node;
+			node = node.next;
+		}
+		System.out.println();
+		System.out.println("Traversal in reverse Direction");
+		while(last != null) {
+			System.out.print(last.value + " " );
+			last = last.prev;
+		}
+	}
+	
+	/*
+	 * Testing
+	 */
+	public static void main(String[] args) throws Exception {
+		DoubleLinkedList dll = new DoubleLinkedList();
+		dll.append(6);
+		dll.push(7);
+		dll.push(1);
+		dll.append(4);
+		dll.insertAfter(8, dll.head.next);
+		System.out.println("Created DLL is: ");
+		dll.printList(dll.head);
 	}
 }
