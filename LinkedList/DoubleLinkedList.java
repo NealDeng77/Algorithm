@@ -22,7 +22,7 @@ public class DoubleLinkedList {
 	public void push(int data) {
 		if(head != null) {
 			Node oldHead = head;
-			Node head = new Node(data);
+			head = new Node(data);
 			head.next = oldHead;
 			oldHead.prev = head;
 		}else {
@@ -134,7 +134,7 @@ public class DoubleLinkedList {
 	 */
 	public static void main(String[] args) throws Exception {
 		DoubleLinkedList dll = new DoubleLinkedList();
-		dll.append(6);
+		dll.append(6); 
 		dll.push(7);
 		dll.push(1);
 		dll.append(4);
