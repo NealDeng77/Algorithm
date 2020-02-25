@@ -90,22 +90,41 @@ public class DoubleLinkedList {
 			head = newNode;
 		}
 	}
-	
-	public Node deleteNode(Node head, int value) {
+		
+	/*
+	 * delete function of, delete the first occurence of the value
+	 *@param head head of the link
+	 *@param data the value to delete
+	 *@throw Exception if the link list is empty
+	 */
+	public Node deleteNode(Node head, int data) throws Exception {
 		if(head == null) {
+			throw new Exception("Empty link list");
+		}
+		//delete head
+		if(head.value == data && head.next != null) {
+			head.next.prev = null;
+			return head.next;
+		} 
+		//if head.next is null, cannot return head.next
+		else if(head.value == data && head.next == null) {
+			head = null;
 			return null;
 		}
-		//remove head
-		if(head.value == value) {
-			return head.next;
-		}
-		Node x = head;
-		while(x.next != null) {
-			if(x.next.value == value) {
-				x.next = x.next.next;
+		Node deleteNode = head;
+		while(deleteNode.next != null) {
+			//if next Node is the Node to delete, delete that, allocate Nodes
+			if(deleteNode.next.value == data && deleteNode.next.next != null) {
+				deleteNode.next.next.prev = deleteNode;
+				deleteNode.next = deleteNode.next.next;
+				return head;
+			} else if(deleteNode.next.value == data && deleteNode.next.next == null) {
+				deleteNode.next = null;
 				return head;
 			}
-			x = x.next;
+			else {
+				deleteNode = deleteNode.next;
+			}
 		}
 		return head;
 	}
@@ -114,6 +133,10 @@ public class DoubleLinkedList {
 	 * Print list
 	 */
 	public void printList(Node node) {
+		if(node == null) {
+			System.out.println("Empty linked list!");
+			return;
+		}
 		Node last = null;
 		System.out.println("Traversal in forward Direction");
 		while(node != null) {
@@ -139,7 +162,16 @@ public class DoubleLinkedList {
 		dll.push(1);
 		dll.append(4);
 		dll.insertAfter(8, dll.head.next);
+		dll.insertBefore(9, dll.head.next.next);
+		dll.head = dll.deleteNode(dll.head, 7);
+		dll.head = dll.deleteNode(dll.head, 1);
+		dll.head = dll.deleteNode(dll.head, 4);
+		dll.head = dll.deleteNode(dll.head, 9);
+		dll.head = dll.deleteNode(dll.head, 4);
+		dll.head = dll.deleteNode(dll.head, 8);
+		dll.head = dll.deleteNode(dll.head, 6);
 		System.out.println("Created DLL is: ");
 		dll.printList(dll.head);
+
 	}
 }
