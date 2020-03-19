@@ -1,2 +1,4 @@
 /stdlib.jar
-/.class
+/Bag$ListIterator.class
+/Bag$Node.class
+/Bag.class
