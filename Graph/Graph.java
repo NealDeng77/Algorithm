@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.Bag;
 public class Graph {
 	private Bag<Integer>[] adj;     //using bag to implement the graph
 	private final int V;            //number of vertices
+	private int E;                  //number of edges
 	
 	/*
 	 * Create an empty graph with V vertices
@@ -33,6 +34,7 @@ public class Graph {
 		//add edge v-w
 		adj[v].add(w);
 		adj[w].add(v);
+		E++;
 	}
 	
 	/*
@@ -47,32 +49,48 @@ public class Graph {
 	 * number of vertices
 	 */
 	int V() {
-		
+		return V;
 	}
 	
 	/*
 	 * number of edges
 	 */
 	int E() {
+		return E;
 		
+	}
+	
+	/*
+	 * return the degree of vertex v
+	 */
+	public int degree(int v) {
+		return adj[v].size();
 	}
 	
 	/*
 	 * String representation
 	 */
-	String toString() {
-		
-	}
-	
-	//a simple client to use the API
-	public void main(String[] args) {
-		In in = new In(args[0]);   //read graph from input stream
-		Graph G = new Graph(in);
-		
-		for (int v = 0; v < G.V(); v++) {
-			for (int w : G.adj(v)) {                //print out each edge(twice)
-				StdOut.println( v + "-" + w);
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(V + " vertices, " + E + " edges ");
+		for(int v = 0; v < V; v++) {
+			s.append(v + ": ");
+			for(int w : adj[v]) {
+				s.append(w + " ");
 			}
 		}
+		return s.toString();
 	}
+	
+//	//a simple client to use the API
+//	public void main(String[] args) {
+//		In in = new In(args[0]);   //read graph from input stream
+//		Graph G = new Graph(in);
+//		
+//		for (int v = 0; v < G.V(); v++) {
+//			for (int w : G.adj(v)) {                //print out each edge(twice)
+//				StdOut.println( v + "-" + w);
+//			}
+//		}
+//	}
 }
