@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 import edu.princeton.cs.algs4.Bag;
 
 // Graph api
@@ -20,12 +22,59 @@ public class Graph {
 		}
 	}
 	
-//	/*
-//	 * Create  a graph from input stream
-//	 */
-//	public Graph(In in) {
-//		
-//	}
+	/*
+	 * Create  a graph from input stream
+	 */
+	@SuppressWarnings("unchecked")
+	public Graph(In in) {
+		if(in == null) throw new IllegalArgumentException("argument is illegal");
+		try {
+			this.V = in.readInt();
+			if(V < 0) throw new IllegalArgumentException("vertices in a graph could not be negative");
+			adj = (Bag<Integer>[])new Bag[V];
+			for(int v = 0; v < V; v++) {
+				adj[v] = new Bag<Integer>();
+			}
+			this.E = in.readInt();
+			if(E < 0) throw new IllegalArgumentException("edges in a graph could not be negative");
+			for(int i = 0; i < E; i++) {
+				int v = in.readInt();
+				int w = in.readInt();
+				validateVertex(v);
+				validateVertex(w);
+				addEdge(v, w);
+			}
+		}
+		catch (NoSuchElementException e) {
+			throw new IllegalArgumentException("invalid input format in Graph constructor", e);
+		}
+	}
+	
+	/*
+	 * Initializes a new graph using deep copy
+	 */
+	@SuppressWarnings("unchecked")
+	public Graph(Graph G) {
+		this.V = G.V;
+		this.E = G.E;
+		if (V < 0) throw new IllegalArgumentException("Number of vertices must be nonnegative");
+		if(E < 0) throw new IllegalArgumentException("edges in a graph could not be negative");
+		
+		adj = (Bag<Integer>[]) new Bag[V];
+		for(int v = 0; v < V; v++) {
+			adj[v] = new Bag<Integer>();
+		}
+		
+		for(int v = 0; v < G.V(); v++) {
+			Stack<Integer> reverse = new Stack<Integer>();
+			for (int w : G.adj(v)) {
+				reverse.push(w);
+			}
+			for(int w : reverse) {
+				adj[v].add(w);
+			}
+		}
+	}
 	
 	/*
 	 * Add an edge v-w
@@ -82,15 +131,16 @@ public class Graph {
 		return s.toString();
 	}
 	
-//	//a simple client to use the API
-//	public void main(String[] args) {
-//		In in = new In(args[0]);   //read graph from input stream
-//		Graph G = new Graph(in);
-//		
-//		for (int v = 0; v < G.V(); v++) {
-//			for (int w : G.adj(v)) {                //print out each edge(twice)
-//				StdOut.println( v + "-" + w);
-//			}
-//		}
-//	}
+	private void validateVertex(int v) {
+		if(v < 0 || v >= V) {
+			throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+		}
+	}
+	
+	//a simple client to use the API
+	public void main(String[] args) {
+		In in = new In(args[0]);   //read graph from input stream
+		Graph G = new Graph(in);
+		StdOut.println(G);
+	}
 }
