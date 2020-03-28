@@ -1,6 +1,11 @@
 /*
  * DFS, find paths from a source vertex to every other vertex in an undirected graph
  */
+
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.Graph;
 public class DFSPaths {
 	private boolean[] marked;    //marked[v] = true if v connected to s 
 	private int[] edgeTo;        //edgeTo[v] = previous vertex on path from s to v

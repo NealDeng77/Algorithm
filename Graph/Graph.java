@@ -1,7 +1,6 @@
 import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.Bag;
-
 // Graph api
 //Adjacency-list graph representation, maintain vertex-indexed array of lists
 public class Graph {
@@ -76,6 +75,7 @@ public class Graph {
 		}
 	}
 	
+
 	/*
 	 * Add an edge v-w
 	 */
