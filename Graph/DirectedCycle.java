@@ -1,6 +1,11 @@
 //This class adds to our standard recursive dfs() a boolean array onStack[] to keep track of the vertices
 //for which the recursive call has not completed. When it finds an edge v->w to a vertex w that is on
 //the stack, it has discovered a directed cycle, which it can recover by following edgeTo[] links.
+
+//When executing dfs(G, v), we have followed a directed path from the source to v. To
+//keep track of this path, DirectedCycle maintains a vertex-indexed array onStack[]
+//that marks the vertices on the recursive call stack (by setting onStack[v] to true
+//on entry to dfs(G, v) and to false on exit).
 public class DirectedCycle {
 	private int[] edgeTo;
 	private boolean[] marked;
