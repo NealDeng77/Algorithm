@@ -1,3 +1,6 @@
+
+import edu.princeton.cs.algs4.Shell;
+
 /*
  * Reference: https://www.geeksforgeeks.org/union-and-intersection-of-two-sorted-arrays-2/
  
@@ -53,7 +56,38 @@
 //insert operations take Θ(1) time.
 
 public class IntersectionOfTwoArrays {
-
+	class Point2D implements Comparable<Point2D> {
+		private double x;
+		private double y;
+		
+		public int compareTo(Point2D that) {
+			if(this.x > that.x) return 1;
+			if(this.x < that.x) return -1;
+			if(this.y > that.y) return 1;
+			if(this.y < that.y) return -1;
+			return 0;
+		}
+		
+	}
+	
+	public int count(Point2D[] a, Point2D[] b) {
+		Shell.sort(a);
+		Shell.sort(b);
+		int count = 0;
+		int i = 0, j = 0;
+		while(i < a.length && j < b.length) {
+			if(a[i].compareTo(b[j]) > 0) {
+				j++;
+			}else if ( a[i].compareTo(b[j]) < 0) {
+				i++;
+			}else {
+				count ++;
+				i++;
+				j++;
+			}
+		}
+		return count;
+	}
 }
 
 
