@@ -14,5 +14,32 @@
 
 
 public class DutchNationalFlag {
-
+	public static void sort(int[] arr) {
+		int start = 0;
+		int pointer = 0;
+		int last = arr.length - 1;
+		
+		for(int i = 0;i <= last; i++) {
+			if(arr[i] == 0) {
+				swap(arr, start, pointer);
+				start++;
+				pointer++;
+			} else if(arr[i] == 1) {
+				pointer++;
+			} else if(arr[i] == 2) {
+				swap(arr, pointer, last);
+				pointer++;
+				last--;
+			}
+		}
+		
+		
+		
+	}
+	
+	private static void swap(int[] arr, int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
 }
