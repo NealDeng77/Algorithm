@@ -1,5 +1,7 @@
 package Interview;
 //reference: https://www.geeksforgeeks.org/counting-inversions/
+//reference : https://medium.com/@ssbothwell/counting-inversions-with-merge-sort-4d9910dc95f0
+//reference : https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/05DivideAndConquerI.pdf
 public class CountInversion {
 //	static int local = 0;
     static int global = 0;
