@@ -25,4 +25,5 @@ public class MergeSortBU {
 			else a[k] = aux[j++];
 		}
 	}
+	
 }
