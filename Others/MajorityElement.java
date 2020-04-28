@@ -76,15 +76,17 @@ public class MajorityElement {
 	//Time complexity: O(n)
 	//Space: O(1)
 	public static int majorityElement(int[] nums) {
-		int count = 0;
-		int candidate = null;
-		for(int num: nums) {
+		int candidate = nums[0];
+		int count = 1;
+		for(int i = 1; i < nums.length; i++) {
 			if(count == 0) {
-				candidate = num;
+				count++;
+				candidate = nums[i];
+			} else if(candidate == nums[i]) {
+				count++;
+			} else {
+				count--;
 			}
-			
-			count += (candidate == num) ? 1 : -1;
 		}
 		return candidate;
-	}
 }
