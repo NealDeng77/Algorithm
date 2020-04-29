@@ -22,11 +22,11 @@ public class SelectKthlargest {
 				return arr[partition];
 			}
 		}
-		return arr[k];
+		return arr[lo];
 	}
 	
 	private static int partition(int[] arr, int lo, int hi) {
-		int element = arr[0];
+		int element = arr[lo];
 		int i = lo, j = hi + 1;
 		while(true) {
 			while(less(arr[++i], element)) {
