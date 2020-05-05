@@ -30,7 +30,7 @@ public class CountInversion {
 		//use a new copied array b to avoid sorting the original array a
 		int[] b = new int[a.length];
 		int[] aux = new int[a.length];
-		for(int i = 0; i < a.length - 1; i++) {
+		for(int i = 0; i < a.length; i++) {
 			b[i] = a[i];
 		}
 		long inversions = count(a, b, aux, 0, a.length - 1);
