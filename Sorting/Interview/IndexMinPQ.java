@@ -114,6 +114,11 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     public void insert(int i, Key key) {
     	if (i < 0 || i >= maxN) throw new IllegalArgumentException();
     	if (contains(i)) throw new IllegalArgumentException("index is already in the priority queue");
+    	n++;
+    	pq[n] = i;
+    	qp[i] = n;
+    	keys[i] = key;
+    	swim(n);
     }
 
     /**
@@ -123,7 +128,8 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @throws NoSuchElementException if this priority queue is empty
      */
     public int minIndex() {
-
+    	if(n == 0) throw new NoSuchElementException("Priority queue is empty!");
+    	return pq[1];
     }
 
     /**
@@ -133,7 +139,8 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @throws NoSuchElementException if this priority queue is empty
      */
     public Key minKey() {
-
+    	if(n == 0) throw new NoSuchElementException("Priority queue is empty!");
+    	return keys[pq[1]];
     }
 
     /**
@@ -142,7 +149,16 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @throws NoSuchElementException if this priority queue is empty
      */
     public int delMin() {
-
+    	if(n == 0) throw new NoSuchElementException("Priority queue is empty!");
+    	int index = pq[1];
+    	exch(1, n);
+    	n--;
+    	sink(1);
+    	assert index == pq[n+1];
+    	qp[index] = -1;
+    	keys[index] = null;
+    	pq[n+1] = -1;
+    	return index;
     }
 
     /**
@@ -154,19 +170,24 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @throws NoSuchElementException no key is associated with index {@code i}
      */
     public Key keyOf(int i) {
-
+    	if(!contains(i)) throw new NoSuchElementException("index " + i + "is not in the queue");
+    	else return keys[i];
     }
 
     /**
      * Change the key associated with index {@code i} to the specified value.
      *
      * @param  i the index of the key to change
-     * @param  key change the key associated with index {@code i} to this key
+     * @param  key change the key associated with index {@code i} to this key 
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
      * @throws NoSuchElementException no key is associated with index {@code i}
      */
-    public void changeKey(int i, Key key) {
-
+    public void changeKey(int i, Key key) throws Exception {
+    	validate(i);
+    	if(!contains(i)) throw new NoSuchElementException("No key is associated with index");
+    	keys[i] = key;
+    	swim(qp[i]);
+    	sink(qp[i]);
     }
 
 
@@ -179,10 +200,13 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @throws IllegalArgumentException if {@code key >= keyOf(i)}
      * @throws NoSuchElementException no key is associated with index {@code i}
      */
-    public void decreaseKey(int i, Key key) {
-
+    public void decreaseKey(int i, Key key) throws Exception {
+    	validate(i);
+    	if(key.compareTo(keyOf(i)) >= 0) throw new IllegalArgumentException("key is larger than the original key");
+    	keys[i] = key;
+    	swim(qp[i]);
     }
-
+    	
     /**
      * Increase the key associated with index {@code i} to the specified value.
      *
@@ -192,8 +216,12 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @throws IllegalArgumentException if {@code key <= keyOf(i)}
      * @throws NoSuchElementException no key is associated with index {@code i}
      */
-    public void increaseKey(int i, Key key) {
-
+    public void increaseKey(int i, Key key) throws Exception {
+    	validate(i);
+    	if(key.compareTo(keyOf(i)) < 0) throw new IllegalArgumentException("The original key is larger"); 
+    	if(key.compareTo(keyOf(i)) == 0) throw new IllegalArgumentException("The key is equal to the original key ");
+    	keys[i] = key;
+    	sink(qp[i]);
     }
 
     /**
@@ -203,8 +231,16 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
      * @throws NoSuchElementException no key is associated with index {@code i}
      */
-    public void delete(int i) {
-
+    public void delete(int i) throws Exception {
+    	validate(i);
+    	if(!contains(i)) throw new NoSuchElementException("The index is not in the queue");
+    	int index = qp[i];
+    	exch(index, n--);
+    	swim(index);
+    	sink(index);
+//    	pq[n+1] = -1;
+    	keys[i] = null;
+    	qp[i] = -1;
     }
 
 
@@ -216,7 +252,16 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     }
 
     private void exch(int i, int j) {
-
+    	int temp = pq[i];
+    	pq[i] = pq[j];
+    	pq[j] = temp;
+    	qp[pq[j]] = j;
+    	qp[pq[i]] = i;
+    }
+    
+    private void validate(int i) throws Exception {
+    	if(i < 0) throw new IllegalArgumentException("index is negative: " + i);
+    	if(i >= maxN) throw new IllegalArgumentException("index " + i + "is greater than the capacity");
     }
 
 
@@ -255,15 +300,50 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     public Iterator<Integer> iterator() { return new HeapIterator(); }
 
     private class HeapIterator implements Iterator<Integer> {
-
-    }
-
-    public String toString() {
-    	StringBuilder strings = new StringBuilder();
-    	for(int i = 0; i < keys.length; i ++) {
-    		strings.append(keys[i] + " ");
+    	private IndexMinPQ<Key> copy;
+    	
+    	public HeapIterator() {
+    		copy = new IndexMinPQ<Key>(pq.length - 1);
+    		for(int i = 1; i <= n; i++) {
+    			copy.insert(pq[i], keys[pq[i]]);
+    		}
     	}
-    	return strings.toString();
+    	
+    	public boolean hasNext() {return !copy.isEmpty();}
+    	public void remove() {throw new UnsupportedOperationException();}
+    	public Integer next() {
+    		if(!hasNext()) throw new NoSuchElementException();
+    		int index = copy.delMin();
+    		return index;
+    	}
+    }
+    
+    public static void main(String[] args) {
+    	String[] strings = {"it", "was", "the", "best", "of", "times", "it", "was", "the", "worst" };
+    	
+    	IndexMinPQ<String> pq = new IndexMinPQ<String>(strings.length);
+    	for(int i = 0 ; i < strings.length; i++) {
+    		pq.insert(i, strings[i]);
+    	}
+    	
+    	//delete and print each key
+    	while(!pq.isEmpty()) {
+    		int index = pq.delMin();
+    		System.out.println(index + " " + strings[i]);
+    	}
+    	System.out.println();
+    	
+    	//reinsert
+    	for(int i = 0 ; i < strings.length; i++) {
+    		pq.insert(i, strings[i]);
+    	}
+    	
+    	for(int i: pq) {
+    		System.out.println(i + " " + strings[i]);
+    	}
+    	while(!pq.isEmpty()) {
+    		pq.delMin();
+    	}
     }
     
 
