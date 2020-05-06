@@ -13,7 +13,7 @@ package Interview;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import edu.princeton.cs.algs4.StdOut;
+//import edu.princeton.cs.algs4.StdOut;
 
 /**
  *  The {@code IndexMinPQ} class represents an indexed priority queue of generic keys.
@@ -329,7 +329,7 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     	//delete and print each key
     	while(!pq.isEmpty()) {
     		int index = pq.delMin();
-    		System.out.println(index + " " + strings[i]);
+    		System.out.println(index + " " + strings[index]);
     	}
     	System.out.println();
     	
