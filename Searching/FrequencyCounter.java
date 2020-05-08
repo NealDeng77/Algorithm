@@ -1,10 +1,12 @@
+import edu.princeton.cs.algs4.ST;
+
 /*
  * A client program to test ST implementation
  */
 public class FrequencyCounter {
 	public static void main(String[] args) {
 		int minlen = Integer.parseInt(args[0]);
-		ST<Integer, Integer> st = new ST<Integer, Integer>();
+		ST<String, Integer> st = new ST<String, Integer>();
 		while(!StdIn.isEmpty()) {
 			String word = StdIn.readString();
 			if(word.length() < minlen) continue;

@@ -8,11 +8,11 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 	private int n = 0;
 	private final int INIT_CAPACITY = 2;
 	
-	public BinarySearchST<Key, Value> () {
+	public BinarySearchST() {
 		
 	}
 	
-	public BinarySearchST<Key, Value> (int capacity) {
+	public BinarySearchST(int capacity) {
 		keys = (Key[]) new Comparable[capacity];
 		values = (Value[]) new Object[capacity];
 	

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
@@ -16,3 +17,23 @@
 	<classpathentry kind="lib" path="C:/Users/neald/OneDrive - Seattle University/Algorithm/Princeton Algorithm course/SourceCodeAndFiles/algs4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="UnionFind"/>
+	<classpathentry kind="src" path="StackQueueBags"/>
+	<classpathentry kind="src" path="LinkedList"/>
+	<classpathentry kind="src" path="Sorting"/>
+	<classpathentry kind="src" path="Graph"/>
+	<classpathentry kind="src" path="Searching"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-12">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="H:/eclipseCWorkSpace/Algorithms/src/stdlib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neald/OneDrive - Seattle University/Algorithm/Princeton Algorithm course/SourceCodeAndFiles/algs4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+>>>>>>> branch 'Desktop' of https://github.com/NealDeng77/Algorithm.git
