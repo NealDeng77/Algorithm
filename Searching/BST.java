@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.util.NoSuchElementException;
 
 public class BST<Key extends Comparable<Key>, Value> {
@@ -204,16 +203,13 @@ public class BST<Key extends Comparable<Key>, Value> {
 	
 	//need test
 	public void deleteMin() {
+		if (isEmpty()) throw new NoSuchElementException("Symbol table underflow");
 		root = deleteMin(root);
 	}
 	
 	private Node deleteMin(Node node) {
-		if(node.left == null && node.right == null) {
-			return null;
-		}
-		else if(node.left == null && node.right != null) {
-			return node.right;
-		} else {
+		if(node.left == null) return node.right;
+		else {
 			node.left = deleteMin(node.left);
 			node.count = size(node.left) + size(node.right) + 1;
 			return node;
@@ -226,10 +222,8 @@ public class BST<Key extends Comparable<Key>, Value> {
 	}
 	
 	private Node deleteMax(Node node) {
-		if(node == null) return null;
-		else if(node.left != null && node.right == null) {
-			return node.left;
-		}
+		if (isEmpty()) throw new NoSuchElementException("Symbol table underflow");
+		if(node.right == null) return node.left;
 		else {
 			node.right = deleteMax(node.right);
 			node.count = size(node.left) + size(node.right) + 1;
@@ -247,130 +241,97 @@ public class BST<Key extends Comparable<Key>, Value> {
 		int cmp = key.compareTo(node.key);
 		if(cmp < 0) {
 			node.left = delete(node.left, key);
-			node.count = size(node.left) + size(node.right) + 1;
 		} else if(cmp > 0) {
 			node.right = delete(node.right, key);
-			node.count = size(node.left) + size(node.right) + 1;
 		} else {
-			if(node.left == null && node.right != null) {
-				return node.right;
-			}
-			//find the largest key in the left subtree
-			else {
-				Key replacedKey = findLargestKeyInTheLeftSubTree(node.left);
-				node.key = replacedKey;
-				node.left = deleteMax(node.left);
-				node.count = size(node.left) + size(node.right) + 1;
-			}
-			
+			if(node.left == null) return node.right;
+			if(node.right == null) return node.left;
+			//if node has left and right child
+			Node x = node;
+			node = min(x.right);
+			node.right = deleteMin(x.right);
+			node.left = x.left;
 		}
+		node.count = size(node.left) + size(node.right) + 1;
 		return node;
 	}
 	
-	private Key findLargestKeyInTheLeftSubTree(Node node) {
-		
-		while(node.right != null) {
-			node = node.right;
-		}
-		return node.key;
+	public Iterable<Key> keys() {
+		return keys(min(), max());
 	}
 	
-	
-}
-=======
-import java.util.NoSuchElementException;
-
-public class BST<Key extends Comparable<Key>, Value> {
-	private Node root;
-	
-	private class Node {
-		Key key;
-		Value value;
-		Node left;
-		Node right;
-		int count;
-		
-		public Node(Key key, Value val) {
-			this.key = key;
-			this.value = val;
-			count = 1;
-		}
+	public Iterable<Key> keys(Key lo, Key hi) {
+		Queue<Key> queue = new Queue<Key>();
+		keys(root, queue, lo, hi);
+		return queue;
 	}
 	
-	public int size() {
-		
+	private Iterable<Key> keys(Node node, Queue<Key> queue, Key lo, Key hi) {
+		if(x == null) return;
+		int cmp = node.key.compareTo(lo);
+		int cmp2 = node.key.compareTo(hi);
+		if(cmp < 0) keys(node.right, queue, lo, hi);
+		else if(cmp2 > 0) keys(node.left, queue, lo, hi);
+		else if(cmp >= 0 && cmp2 <= 0) queue.enqueue(node.key);
 	}
 	
-	public Value get(Key key) {
-		return get(root, key);
-	}
-	
-	private Value get(Node node, Key key) {
-		if(node == null) return null;
-		Key currentKey = node.key;
-		if(currentKey.compareTo(key) < 0) {
-			return get(node.right, key);
-		} else if(currentKey.compareTo(key) > 0) {
-			return get(node.left, key);
-		} else {
-			return node.value;
-		}
-	}
-	
-	public void put(Key key, Value val) {
-		root = put(root, key, val);
-	}
-	
-	public Node put(Node node, Key key, Value val) {
-		if(node == null) {
-			return new Node(key, val);
-		}
-		int cmp = key.compareTo(node.key);
-		if(cmp  < 0) {
-			node.left =  put(node.left, key, val);
-		}
-		else if(cmp  > 0) {
-			node.right =  put(node.right, key, val);
-		}
+	/*
+	 * Return the number of keys in the given range
+	 */
+	public int size(Key lo, Key hi) {
+		if(lo.compareTo(hi) > 0) return 0;
+		if(contains(hi)) return rank(hi) - rank(lo) + 1;
 		else {
-			node.value = val;
-		}
-		node.count = node.left.count + node.right.count + 1;
-		return node;
-	}
-	
-	public boolean isEmpty() {
-		return root == null;
-	}
-	
-	public Key min() {
-		if(isEmpty()) throw new NoSuchElementException();
-		return min(root).key;
-	}
-	
-	private Node min(Node node) {
-		if(node.left != null) {
-			return min(node.left);
-		} else {
-			return node;
+			return rank(hi) - rank(lo);
 		}
 	}
 	
-	public Key floor(Key key) {
-		if(isEmpty()) throw new NoSuchElementException();
-		
+	public int height() {
+		return height(root);
 	}
 	
-	public Key ceiling(Key key) {
-		
+	private int height(Node x) {
+		if(x == null) return -1;
+		return 1 + Math.max(height(x.left), (height(x.right));
+	}
+
+	public Iterable<Key> levelOrder() {
+		Queue<Key> keys = new Queue<Key>;
+		Queue<Node> queue = new Queue<Node>;
+		queue.enqueue(root);
+		while(!queue.isEmpty()) {
+			Node x = queue.dequeue();
+			if(x == null) continue;
+			keys.enqueue(x.key);
+			queue.enqueue(x.left);
+			queue.enqueue(x.right);
+		}
+		return keys;
 	}
 	
-	public Key select(int k) {
-		
+	private boolean isBST() {
+		return isBST(root, null, null);
 	}
 	
-	public int rank(Key key) {
+	private boolean isBST(Node node, Key min, Key max) {
+		if(min != null && node.key.compareTo(min) < 0) return false;
+		if(max != null && node.key.compareTo(max) > 0) return false;
+		return isBST(node, min, node.key) && isBST(node, node.key, max);
+	}
+	
+	private boolean isSizeConsistent() {return isSizeConsistent(root);}
+	private boolean isSizeConsistent(Node node) {
+		if(node == null) return true;
+		if(node.size != size(node.left) + size(node.right) + 1) return false;
+		return isSizeConsistent(node.left) && isSizeConsistent(node.right)
+	}
+	
+	private boolean isRankConsistent() {
+		for(int i = 0 ; i < size(); i++) {
+			if( i != rank(select(i))) return false;
+		}
+		
 		
 	}
 }
->>>>>>> branch 'Desktop' of https://github.com/NealDeng77/Algorithm.git
+
