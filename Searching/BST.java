@@ -267,12 +267,12 @@ public class BST<Key extends Comparable<Key>, Value> {
 	}
 	
 	private Iterable<Key> keys(Node node, Queue<Key> queue, Key lo, Key hi) {
-		if(x == null) return;
-		int cmp = node.key.compareTo(lo);
-		int cmp2 = node.key.compareTo(hi);
-		if(cmp < 0) keys(node.right, queue, lo, hi);
-		else if(cmp2 > 0) keys(node.left, queue, lo, hi);
-		else if(cmp >= 0 && cmp2 <= 0) queue.enqueue(node.key);
+		if(node == null) return;
+		int cmplo = lo.compareTo(node.key);
+		int cmphi = hi.compareTo(node.key);
+		if(cmplo < 0) keys(node.left, queue, lo, hi);
+		if(cmplo <= 0 && cmphi >= 0) queue.enqueue(x.key);
+		if(cmphi > 0) keys(node.right, queue, lo, hi); 
 	}
 	
 	/*
