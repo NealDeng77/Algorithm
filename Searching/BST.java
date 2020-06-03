@@ -209,11 +209,9 @@ public class BST<Key extends Comparable<Key>, Value> {
 	
 	private Node deleteMin(Node node) {
 		if(node.left == null) return node.right;
-		else {
-			node.left = deleteMin(node.left);
-			node.count = size(node.left) + size(node.right) + 1;
-			return node;
-		}
+		node.left = deleteMin(node.left);
+		node.count = size(node.left) + size(node.right) + 1;
+		return node;
 	}
 	
 	
@@ -228,7 +226,7 @@ public class BST<Key extends Comparable<Key>, Value> {
 			node.right = deleteMax(node.right);
 			node.count = size(node.left) + size(node.right) + 1;
 			return node;
-		}
+		}k
 	}
 	
 	public void delete(Key key) {
