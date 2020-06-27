@@ -20,7 +20,7 @@ public class DutchNationalFlag {
 		int pointer = 0;
 		int last = arr.length - 1;
 		
-		for(int i = 0;i <= last; i++) {
+		while(pointer <= last) {
 			if(arr[i] == 0) {
 				swap(arr, start, pointer);
 				start++;
@@ -29,8 +29,11 @@ public class DutchNationalFlag {
 				pointer++;
 			} else if(arr[i] == 2) {
 				swap(arr, pointer, last);
-				pointer++;
+				
 				last--;
+			}
+			else {
+				break;
 			}
 		}
 		
