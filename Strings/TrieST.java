@@ -5,7 +5,7 @@ public class TrieST<Value> {
 	private Node root;
 	private int n;             // number of keys in the trie
 	
-	private class Node {
+	private static class Node {
 		private Object val;
 		private Node[] next = new Node[R];
 	}
