@@ -16,22 +16,23 @@ public class RootingTheTree {
 	}
 	private TreeNode root;
 	
-	public TreeNode buildTree(Graph G, int initialRoot) {
+	public TreeNode buildTree(List<List<Integer>> G, int initialRoot) {
 		root = new TreeNode(initialRoot, null);
 		return buildTree(root, null, G);
 	}
 	
 	//use dfs to build the rooted Tree
-	private TreeNode buildTree(TreeNode currentNode, TreeNode parent, Graph G) {
+	private TreeNode buildTree(TreeNode currentNode, TreeNode parent, List<List<Integer>> G) {
 		
-		for(int eachAdj : G.adj(currentNode.nodeId)) {
+		for(int eachAdj : G.get(currentNode.nodeId)) {
 			//avoid adding and edge pointing back to the parent
 			if(parent != null && eachAdj == parent.nodeId) continue;
 			
 			TreeNode chid = new TreeNode(eachAdj, currentNode);
 			currentNode.children.add(child);
 			buildTree(child, currentNode, G);
-			return currentNode;
+			
 		}
+		return currentNode;
 	}
 }
