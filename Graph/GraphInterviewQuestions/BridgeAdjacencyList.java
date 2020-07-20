@@ -3,6 +3,8 @@
 //We can use dfs to do that
 //Once we find that the Id[from] < lowestNodeID[to], the from - to is a bridge
 //Usage: Find the bottleNeck in a network
+//reference: https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/graphtheory/BridgesAdjacencyList.java
+//https://www.udemy.com/course/graph-theory-algorithms/learn/lecture/10794156#overview
 import java.util.ArrayList;
 import java.util.List;
 public class BridgeAdjacencyList {
