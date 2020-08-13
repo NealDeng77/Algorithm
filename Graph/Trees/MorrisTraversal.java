@@ -49,8 +49,9 @@ public class MorrisTraversal {
 				//then go left
 				if(predecessor.right == null) {
 					predecessor.right = current;
-					current = current.left;
 					System.out.println(current.val);
+					current = current.left;
+					
 				} 
 				//second visited, meaning the left part has been visited
 				else {
